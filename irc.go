@@ -29,7 +29,6 @@ var (
 	port        string
 	nick        string
 	channellist string
-	database    string
 	oauth       string
 	debug       bool
 	lastmsg     int64 = 0
@@ -46,7 +45,6 @@ func init() {
 	flag.StringVar(&port, "port", "6667", "IRC server port")
 	flag.StringVar(&nick, "nick", "Botname", "Bot's nickname")
 	flag.StringVar(&channellist, "channellist", "#botname", "Comma separated list of channel to join")
-	flag.StringVar(&database, "database", "username:password@protocol(address)/dbname?param=value", "MySQL Data Source Name")
 	flag.StringVar(&oauth, "oauth", "oauth:token", "OAuth token for login, https://twitchapps.com/tmi/")
 	flag.BoolVar(&debug, "debug", false, "If true prints all IRC messages from server as map")
 }
@@ -153,8 +151,6 @@ func main() {
 		fmt.Printf("#%d: %s, ", i, blue(k))
 	}
 	fmt.Printf("\nInserted information to server...\n")
-	//Initialize DB = Create tables & add streamers
-	InitDB()
 	defer conn.Close()
 
 	reader2 := bufio.NewReader(conn)
